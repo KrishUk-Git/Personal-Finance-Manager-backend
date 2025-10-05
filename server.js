@@ -1,4 +1,3 @@
-
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
@@ -10,11 +9,27 @@ const app = express();
 
 connectDB();
 
-app.use(cors({
-  origin: "https://ukpfm.netlify.app",   // your Netlify frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
-}));
+
+const allowedOrigins = [
+  'https://ukpfm.netlify.app',     
+  'http://localhost:5173',       
+  'http://localhost:5174',        
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+};
+
+app.use(cors(corsOptions)); 
+
+
 
 app.use(express.json({ extended: false }));
 
