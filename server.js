@@ -10,7 +10,12 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://ukpfm.netlify.app",   // your Netlify frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
