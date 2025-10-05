@@ -12,7 +12,7 @@ connectDB();
 
 app.use(cors({
   origin: "https://ukpfm.netlify.app",   // your Netlify frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
 
