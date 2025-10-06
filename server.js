@@ -7,9 +7,10 @@ dotenv.config();
 const app = express();
 connectDB();
 
+// --- START of CORS Configuration ---
 const allowedOrigins = [
-  'https://ukpfm.netlify.app',     
-  'http://localhost:5173',        
+  'https://ukpfm.netlify.app',      // Your deployed frontend
+  'http://localhost:5173',        // Your local development frontend
 ];
 
 const corsOptions = {
@@ -23,11 +24,13 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+// --- END of CORS Configuration ---
 
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
 
+// Define Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/transactions', require('./routes/transactions'));
 
