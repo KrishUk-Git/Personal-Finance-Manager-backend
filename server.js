@@ -8,8 +8,8 @@ const app = express();
 connectDB();
 
 const allowedOrigins = [
-  'https://ukpfm.netlify.app',
-  'http://localhost:5173',
+  'https://ukpfm.netlify.app',      
+  'http://localhost:5173',        
 ];
 
 const corsOptions = {
@@ -23,6 +23,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
