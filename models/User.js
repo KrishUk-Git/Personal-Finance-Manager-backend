@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-  // --- Add this 'name' field ---
-  name: {
-    type: String,
-    required: true,
-  },
-  // -----------------------------
   username: {
     type: String,
     required: true,

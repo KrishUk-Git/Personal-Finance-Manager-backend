@@ -2,11 +2,12 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-
+// Register a new user
 exports.registerUser = async (req, res) => {
-  const { username, name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-  if (!username || !name || !email || !password) {
+  // Validation
+  if (!username || !email || !password) {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
 
@@ -15,7 +16,6 @@ exports.registerUser = async (req, res) => {
     if (user) {
       return res.status(400).json({ msg: 'User already exists with this email' });
     }
-
     user = await User.findOne({ username });
     if (user) {
         return res.status(400).json({ msg: 'Username is already taken' });
@@ -23,21 +23,15 @@ exports.registerUser = async (req, res) => {
 
     user = new User({
       username,
-      name,
       email,
       password,
     });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-
     await user.save();
 
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
+    const payload = { user: { id: user.id } };
 
     jwt.sign(
       payload,
@@ -54,6 +48,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
+// Authenticate user & get token
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -72,11 +67,7 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ msg: 'Invalid Credentials' });
     }
 
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
+    const payload = { user: { id: user.id } };
 
     jwt.sign(
       payload,
@@ -93,6 +84,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+// Get logged in user
 exports.getLoggedInUser = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
