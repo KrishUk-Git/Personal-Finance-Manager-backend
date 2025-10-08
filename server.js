@@ -8,8 +8,8 @@ const app = express();
 connectDB();
 
 const allowedOrigins = [
-  'https://ukpfm.netlify.app',      // Your deployed frontend
-  'http://localhost:5173',        // Your local development frontend
+  'https://ukpfm.netlify.app',     
+  'http://localhost:5173',     
 ];
 
 const corsOptions = {
