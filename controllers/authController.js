@@ -2,6 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// Register a new user
 exports.registerUser = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -19,11 +20,7 @@ exports.registerUser = async (req, res) => {
         return res.status(400).json({ msg: 'Username is already taken' });
     }
 
-    user = new User({
-      username,
-      email,
-      password,
-    });
+    user = new User({ username, email, password });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
@@ -46,6 +43,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
+// Authenticate user & get token
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -81,6 +79,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+// Get logged in user
 exports.getLoggedInUser = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
@@ -90,3 +89,4 @@ exports.getLoggedInUser = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+

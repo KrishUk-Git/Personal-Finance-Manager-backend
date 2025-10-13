@@ -7,9 +7,10 @@ dotenv.config();
 const app = express();
 connectDB();
 
+// CORS Configuration
 const allowedOrigins = [
-  'https://ukpfm.netlify.app',     
-  'http://localhost:5173',     
+  'https://ukpfm.netlify.app',      // Your deployed frontend
+  'http://localhost:5173',        // Your local development frontend
 ];
 
 const corsOptions = {
@@ -27,8 +28,10 @@ app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
 
+// Define Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/transactions', require('./routes/transactions'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
