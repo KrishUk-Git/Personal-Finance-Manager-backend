@@ -1,4 +1,4 @@
-const Budget = require('../models/Budget');
+const Budget = require('../models/budget');
 const Transaction = require('../models/Transaction');
 const moment = require('moment');
 
