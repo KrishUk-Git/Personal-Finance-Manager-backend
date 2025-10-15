@@ -14,14 +14,19 @@ const BudgetSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  // We'll focus on monthly budgets for now as they are most common
+  // Storing the month as a string like "YYYY-MM" for easy querying
   month: {
-    type: String, // Format: "YYYY-MM"
+    type: String,
     required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 
-// Ensure a user can only have one budget per category per month
+// To prevent a user from creating multiple budgets for the same category in the same month
 BudgetSchema.index({ user: 1, category: 1, month: 1 }, { unique: true });
 
 module.exports = mongoose.model('budget', BudgetSchema);
+
