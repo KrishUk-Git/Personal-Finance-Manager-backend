@@ -30,7 +30,10 @@ app.get('/', (req, res) => res.send('API Running'));
 // Define Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/transactions', require('./routes/transactions'));
-app.use('/api/budgets', require('./routes/budgets')); // <-- ADD THIS LINE
+app.use('/api/budgets', require('./routes/budgets'));
+app.use('/api/goals', require('./routes/goals'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/reports', require('./routes/reports'));
 
 const PORT = process.env.PORT || 5000;
 
