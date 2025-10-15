@@ -3,8 +3,12 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+// Load env vars
 dotenv.config();
+
 const app = express();
+
+// Connect Database
 connectDB();
 
 // CORS Configuration
@@ -24,14 +28,19 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Init Middleware
 app.use(express.json({ extended: false }));
 
+// Define a simple root route
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/transactions', require('./routes/transactions'));
+app.use('/api/budgets', require('./routes/budgets')); // Route for budgets
 
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
