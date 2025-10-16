@@ -6,4 +6,4 @@ const { getProfile, updateProfile } = require('../controllers/userController');
 router.route('/profile').get(auth, getProfile).put(auth, updateProfile);
 
 module.exports = router;
-//
+
