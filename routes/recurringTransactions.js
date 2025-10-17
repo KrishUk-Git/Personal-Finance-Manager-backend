@@ -6,5 +6,5 @@ const { getRecurringTransactions, addRecurringTransaction, deleteRecurringTransa
 router.route('/').get(auth, getRecurringTransactions).post(auth, addRecurringTransaction);
 router.route('/:id').delete(auth, deleteRecurringTransaction);
 
-module.exports = router;
+module.exports = router;//
 
