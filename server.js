@@ -25,17 +25,19 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ extended: false }));
 
-app.get('/', (req, res) => res.send('API Running'));
+app.get('/', (req, res) => res.send('API is running successfully'));
 
-// Define Routes
+// Define all API Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/transactions', require('./routes/transactions'));
 app.use('/api/budgets', require('./routes/budgets'));
 app.use('/api/goals', require('./routes/goals'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/reports', require('./routes/reports'));
+app.use('/api/recurring', require('./routes/recurringTransactions'));
+app.use('/api/forecasting', require('./routes/forecasting'));
+app.use('/api/notifications', require('./routes/notifications'));
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 

@@ -1,7 +1,31 @@
 const Transaction = require('../models/Transaction');
+const RecurringTransaction = require('../models/RecurringTransaction');
+const moment = require('moment');
+
+const generateRecurringTransactions = async (userId) => {
+    const today = moment();
+    const recurringItems = await RecurringTransaction.find({ user: userId });
+    for (const item of recurringItems) {
+        let lastCreated = moment(item.lastCreatedDate || item.startDate);
+        while (lastCreated.add(1, 'months').isSameOrBefore(today)) {
+            const newTransaction = new Transaction({
+                user: userId,
+                description: item.description + ' (Recurring)',
+                amount: item.amount,
+                type: item.type,
+                category: item.category,
+                date: lastCreated.toDate(),
+            });
+            await newTransaction.save();
+            item.lastCreatedDate = lastCreated.toDate();
+            await item.save();
+        }
+    }
+};
 
 exports.getTransactions = async (req, res) => {
   try {
+    await generateRecurringTransactions(req.user.id);
     const transactions = await Transaction.find({ user: req.user.id }).sort({ date: -1 });
     res.json(transactions);
   } catch (err) {

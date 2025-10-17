@@ -5,6 +5,9 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   currency: { type: String, default: 'USD' },
+  notificationsEnabled: { type: Boolean, default: true },
+  mfaSecret: { type: String },
+  mfaEnabled: { type: Boolean, default: false },
   date: { type: Date, default: Date.now },
 });
 

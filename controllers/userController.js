@@ -11,11 +11,11 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.updateProfile = async (req, res) => {
-  const { currency } = req.body;
+  const { currency, notificationsEnabled } = req.body;
   try {
     let user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ msg: 'User not found' });
-    user = await User.findByIdAndUpdate(req.user.id, { $set: { currency } }, { new: true }).select('-password');
+    user = await User.findByIdAndUpdate(req.user.id, { $set: { currency, notificationsEnabled } }, { new: true }).select('-password');
     res.json(user);
   } catch (err) {
     console.error(err.message);
